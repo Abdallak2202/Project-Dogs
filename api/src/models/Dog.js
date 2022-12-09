@@ -15,15 +15,17 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     height: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     weight: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     lifespan: {
-      type: DataTypes.NUMBER
+      type: DataTypes.FLOAT
     }
+  }, {
+    timestamps: false
   });
 };
