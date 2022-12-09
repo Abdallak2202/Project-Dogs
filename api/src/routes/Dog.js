@@ -11,18 +11,15 @@ const {getApiIdDog}= require("../controllers/controller-1");
 
 router.get("/", async (req, res) => {
     let {name}= req.query;
-    var apiResponse;
 
-    if (name) {
         try {
-            apiResponse= getApiAllDogs();
+            let apiResponse= await getApiNameDog(name);
             return res.status(200).send(apiResponse);
         }
         catch(e) {
             console.log(e);
             return res.status(404).send("404 not found");
         }
-    }
     
 });
 
