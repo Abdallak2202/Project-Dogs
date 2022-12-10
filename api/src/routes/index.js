@@ -14,7 +14,7 @@ router.use(bodyParser.json());
 // Ejemplo: router.use('/auth', authRouter);
 
 router.use("/dogs", dogRoute);
-//router.use("/temperament", temperamentRoute);
+router.use("/temperament", temperamentRoute);
 
 
 module.exports = router;
