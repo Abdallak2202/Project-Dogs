@@ -41,7 +41,19 @@ const getTemperaments= async () => {
     // sorts the temperaments in ascending order and gets rid of the null temperament in the array
     uniqueTemperaments.sort().shift();
 
-    return uniqueTemperaments;
+    // creates the temperaments in the database
+    uniqueTemperaments.map((t) => Temperament.findOrCreate({
+        where: {
+            name: t
+        }
+    }))
+
+    // returns the temperaments
+    let temperaments= await Temperament.findAll({
+        attributes: ['name', 'id']
+    })
+
+    return temperaments;
 }
 
 const getDbAllDogs= async () => {
