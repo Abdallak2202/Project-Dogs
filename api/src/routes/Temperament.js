@@ -7,14 +7,18 @@ const {getTemperaments}= require("../controllers/controller-2");
 
 router.get("/", async (req, res) => {
     try {
-        let apiResponse= await getTemperaments();
-        return res.status(200).send(apiResponse);
+        const temperaments= await getTemperaments();
+
+        if (!temperaments) {
+            return res.status(404).send("Temperaments not found...");
+        }
+        return res.status(200).send(temperaments);
     }
     catch(e) {
         console.log(e);
-        return res.status(404).send("404 not found");
+        res.status(500).send("An error has ocurred with temperaments...");
     }
-})
+});
 
 
 module.exports= router;

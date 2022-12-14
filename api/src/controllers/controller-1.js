@@ -14,12 +14,23 @@ const getApiAllDogs= async () => {
             name: d.name,
             height: d.height.metric+" cm",
             weight: d.weight.metric+" kg",
-            lifespan: d.life_span
+            lifespan: d.life_span,
+            temperaments: d.temperament,
+            image: d.image.url
         };
         dogs.push(dog);
     })
+    dogs.map(d => {
+        if (d.id===179) {
+            d.weight= 31+" kg";
+        }
+        if (d.id===232) {
+            d.weight= 8+" kg";
+        }
+    })
     console.log(dogs.length);
     return dogs;
+    // I have to put temperaments to dogs 
 };
 
 
@@ -33,10 +44,14 @@ const getApiNameDog= async (name) => {
         name: data[0].name,
         height: data[0].height.metric+" cm",
         weight: data[0].weight.metric+" kg",
-        lifespan: data[0].life_span
+        lifespan: data[0].life_span,
+        temperaments: data[0].temperament,
+        image: `https://cdn2.thedogapi.com/images/${data[0].reference_image_id}.jpg`
     }
     dog.push(dogInfo);
 
+    // `https://cdn2.thedogapi.com/images/${data[0].reference_image_id}.jpg`
+    // https://cdn2.thedogapi.com/images/hMyT4CDXR.jpg
     console.log("data= ", data);
     console.log("dog= ", dog);
     return dog;
@@ -55,7 +70,9 @@ const getApiIdDog= async (id) => {
             name: d.name,
             height: d.height.metric+" cm",
             weight: d.weight.metric+" kg",
-            lifespan: d.life_span
+            lifespan: d.life_span,
+            temperaments: d.temperament,
+            image: d.image.url
         };
         dogs.push(dog);
     })

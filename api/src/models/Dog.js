@@ -12,7 +12,8 @@ module.exports = (sequelize) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     height: {
       type: DataTypes.FLOAT,
@@ -24,6 +25,14 @@ module.exports = (sequelize) => {
     },
     lifespan: {
       type: DataTypes.FLOAT
+    },
+    image: {
+      type: DataTypes.BLOB,
+    },
+    created: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   }, {
     timestamps: false
