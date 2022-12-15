@@ -1,4 +1,7 @@
 import './App.css';
+import React from "react";
+import {Route} from "react-router-dom";
+// components
 
 function App() {
   return (
