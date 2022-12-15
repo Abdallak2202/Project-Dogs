@@ -69,3 +69,31 @@ export const postDog= async (data) => {
 
     return response;
 }
+
+export const filterByTemperament= (payload) => {
+    return {
+        type: "FILTER_BY_TEMPERAMENT",
+        payload // e.target.value
+    }
+}
+
+export const filterByOrigin= (payload) => {
+    return {
+        type: "FILTER_BY_ORIGIN",
+        payload
+    }
+}
+
+export const orderByRace= (payload) => {
+    return {
+        type: "ORDER_BY_RACE",
+        payload
+    }
+}
+
+export const orderByWeight= (payload) => {
+    return {
+        type: "ORDER_BY_WEIGHT",
+        payload
+    }
+}
