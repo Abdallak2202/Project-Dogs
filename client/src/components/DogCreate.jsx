@@ -193,8 +193,8 @@ export default function DogCreate() {
                         }
                         {
                             stateTemperaments.map((t) => (
-                                <option value={t.name}>
-                                    {t.name}
+                                <option value={t}>
+                                    {t}
                                 </option>
                             ))
                         }
@@ -205,7 +205,7 @@ export default function DogCreate() {
                     <ul>
                         <li>
                             {
-                                data.temperaments.map(t => t,",")
+                                data.temperaments.map(t => t+" ")
                             }
                         </li>
                     </ul>
@@ -217,8 +217,8 @@ export default function DogCreate() {
                 </form>
                 {
                     data.temperaments.map(t => 
-                    <ul key={t}>
-                        <li>
+                    <ul>
+                        <li key={t}>
                             <p>{t}</p>
                             <button onClick={() => handleDelete(t)}>
                                 X

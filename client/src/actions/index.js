@@ -75,10 +75,26 @@ export const getTemperaments= () => async (dispatch) => {
     }
 }
 
-export const postDog= async (data) => {
-    const response= await axios.post(urlDogs, data);
+export const postDog= (data) => async () => {
+    let newDog= {
+        name: data.name,
+        image: data.image,
+        height: data.height,
+        weight: data.weight,
+        lifespan: data.lifespan,
+        temperament: data.temperaments
+    };
+    const response= await axios.post(urlDogs, newDog);
 
+    console.log(response);
     return response;
+
+        /* name: "",
+        image: "",
+        height: "",
+        weight: "",
+        lifespan: "",
+        temperaments: [] */
 }
 
 export const filterByTemperament= (payload) => {
