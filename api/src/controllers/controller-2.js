@@ -49,9 +49,7 @@ const getTemperaments= async () => {
     }))
 
     // returns the temperaments
-    let temperaments= await Temperament.findAll({
-        attributes: ['name', 'id']
-    })
+    let temperaments= await Temperament.findAll();
 
     return temperaments;
 }
