@@ -33,11 +33,16 @@ export default function rootReducer(state=initialState, action) {
             };
 
         case "FILTER_BY_TEMPERAMENT":
-            const allDogs= state.allDogs;
+            const allDogs= state.dogs;
 
             const filterTemperament= action.payload==="temperaments"?
-            allDogs :
-            allDogs.filter(d => d.temperaments.includes(action.payload));
+            state.allDogs :
+            allDogs.filter(d => {
+                return d.temperaments?
+                d.temperaments.includes(action.payload) :
+                    d.temperaments?.map(t => t.name).includes(action.payload);
+            });
+
             // use .join(" ") before .includes
             // OR .some() with if statement for db dogs
 
@@ -53,7 +58,9 @@ export default function rootReducer(state=initialState, action) {
 
             return {
                 ...state,
-                dogs: filterOrigin
+                dogs: action.payload==="all"?
+                state.allDogs :
+                filterOrigin
             };
 
         case "ORDER_BY_RACE":
@@ -79,36 +86,33 @@ export default function rootReducer(state=initialState, action) {
 
             return {
                 ...state,
-                allDogs: sortOrder
+                dogs: sortOrder
             };
 
         case "ORDER_BY_WEIGHT":
-            if (action.payload==="lowest weight") {
-                var sortWeight= state.allDogs.sort(function (a, b) {
-                    if (a.weight>b.weight) {
-                        return 1;
-                    }
-                    if (b.weight>a.weight) {
-                        return -1;
-                    }
-                    return 0;
-                })
-            }
-            if (action.payload==="highest weight") {
-                sortWeight= state.allDogs.sort(function (a, b) {
-                    if (a.weight>b.weight) {
-                        return -1;
-                    }
-                    if (b.weight>a.weight) {
-                        return 1;
-                    }
-                    return 0;
-                })
-            }
+            let sortWeight= action.payload==="lowest weight" ?
+            state.dogs.sort(function (a, b) {
+                if (a.weight>b.weight) {
+                    return 1;
+                }
+                if (b.weight>a.weight) {
+                    return -1;
+                }
+                return 0;
+            }) :
+            state.dogs.sort(function (a, b) {
+                if (a.weight>b.weight) {
+                    return -1;
+                }
+                if (b.weight>a.weight) {
+                    return 1;
+                }
+                return 0;
+            })
 
             return {
                 ...state,
-                allDogs: sortWeight
+                dogs: sortWeight
             }
 
         default:

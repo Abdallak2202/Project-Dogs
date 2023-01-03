@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const urlDogs= "http://localhost:3001/dogs";
-const urlTemperaments= "http://localhost:3001/temperaments";
+const urlTemperaments= "http://localhost:3001/temperament";
 
 
 export const getDogs= () => async (dispatch) => {
@@ -22,24 +22,33 @@ export const getDogName= (name) => async (dispatch) => {
     try {
         var oneDog= await axios.get(`${urlDogs}?name=${name}`);
 
-        return dispatch({
-            type: "GET_DOG_NAME",
-            payload: oneDog.data
-        })
+            return dispatch({
+                type: "GET_DOG_NAME",
+                payload: oneDog.data
+            })
     }
     catch(e) {
         console.log(e); // add functionality
+        // alert("Dog not found");
     }
 }
 
 export const getDogDetail= (id) => async (dispatch) => {
     try {
-        var oneDog= await axios.get(`${urlDogs}/${id}`);
+        if (id) {
+            var oneDog= await axios.get(`${urlDogs}/${id}`);
 
-        return dispatch({
-            type: "GET_DOG_DETAIL",
-            payload: oneDog.data
-        })
+            dispatch({
+                type: "GET_DOG_DETAIL",
+                payload: oneDog.data
+            })
+        }
+        else {
+            dispatch({
+                type: "GET_DOG_DETAIL",
+                payload: []
+            })
+        }
     }
     catch(e) {
         console.log(e); // add functionality
@@ -51,8 +60,10 @@ export const getTemperaments= () => async (dispatch) => {
         var allTemperaments= await axios.get(urlTemperaments);
         var temperaments= [];
         allTemperaments.data.map((t) => {
-            temperaments.push(t["name"]);
+            let temperamentName= t.name;
+            temperaments.push(temperamentName);
         })
+        console.log(temperaments);
 
         return dispatch({
             type: "GET_TEMPERAMENTS",

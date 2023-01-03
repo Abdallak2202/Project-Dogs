@@ -18,7 +18,15 @@ export default function SearchBar() {
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(getDogName(name));
+        setName("");
     }
+
+    function handleKeyPress(e) {
+        if (e.key==='Enter') {
+            dispatch(getDogName(name)); 
+        }
+    }
+
 
     return (
         <div>
@@ -26,6 +34,7 @@ export default function SearchBar() {
             type="text"
             placeholder="Find your Dog..."
             onChange={(e) => handleChange(e)}
+            onKeyUp={handleKeyPress}
             />
             <button
             type="submit"

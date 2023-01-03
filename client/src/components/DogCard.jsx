@@ -11,7 +11,7 @@ export default function DogCard({id, name, image, temperaments}) {
                 <h5>
                     <p>{temperaments}</p>
                 </h5>
-                <img src={image} alt="404 image not found"/>
+                <img src={image} alt="404 not found"/>
             </div>
         </Fragment>
     )

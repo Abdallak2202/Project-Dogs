@@ -35,20 +35,28 @@ export default function Home() {
 
 
     function handleFilterTemperament(e) {
+        e.preventDefault();
         dispatch(filterByTemperament(e.target.value));
+        setCurrentPage(1);
+        setOrder(`Ordered ${e.target.value}`);
     };
 
     function handleFilterOrigin(e) {
+        e.preventDefault();
         dispatch(filterByOrigin(e.target.value));
+        setCurrentPage(1);
+        setOrder(`Ordered ${e.target.value}`);
     };
 
     function handleSort(e) {
+        e.preventDefault();
         dispatch(orderByRace(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
     };
 
     function handleWeightSort(e) {
+        e.preventDefault();
         dispatch(orderByWeight(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
@@ -70,7 +78,7 @@ export default function Home() {
 
             <div>
                 <div>
-                    <select onChange={e => handleSort(e)}>
+                    <select onClick={e => handleSort(e)}>
                         <option value="asc">
                             A-Z
                         </option>
@@ -95,13 +103,13 @@ export default function Home() {
                             Filter by temperament
                         </option>
                         {
-                            allTemperaments && allTemperaments.map((t) => {
-                                return (
+                            allTemperaments && allTemperaments.map((t) => (
+                                
                                     <option value={t}>
                                         {t}
                                     </option>
-                                );
-                            })
+                                
+                            ))
                         }
                     </select>
 

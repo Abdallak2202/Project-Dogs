@@ -3,17 +3,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 
 import {getDogDetail} from "../actions";
+// import CSS
 
 
 export default function DogDetail() {
     const dispatch= useDispatch();
 
-    const prop= useParams();
-
-    const id= prop.id;
+    const {id}= useParams();
 
     useEffect(() => {
         dispatch(getDogDetail(id));
+        return () => {
+            dispatch(getDogDetail())
+        }
     }, [id, dispatch]);
 
     const stateDetails= useSelector((state) => state.details);
@@ -26,22 +28,22 @@ export default function DogDetail() {
                 <div>
                     <h1>
                         {
-                            stateDetails.name
+                            stateDetails[0].name
                         }
                     </h1>
-                    <img src={stateDetails.image} alt="404 not found"/>
+                    <img src={stateDetails[0].image} alt="404 not found"/>
                     <h3>
-                        Temperament:{stateDetails.temperaments}
+                        Temperament: {stateDetails[0].temperaments}
                         {/* Maybe with .map */}
                     </h3>
                     <h3>
-                        Height:{stateDetails.height}
+                        Height: {stateDetails[0].height}
                     </h3>
                     <h3>
-                        Weight:{stateDetails.weight}
+                        Weight: {stateDetails[0].weight}
                     </h3>
                     <h3>
-                        Life Span:{stateDetails.lifespan}
+                        Life Span: {stateDetails[0].lifespan}
                     </h3>
                 </div> :
                 <p>Loading...</p>

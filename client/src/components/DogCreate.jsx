@@ -6,12 +6,25 @@ import { getTemperaments, postDog } from "../actions";
 // import CSS
 
 
-function validate(data) {
+function validate(input) {
     let errors= {};
 
-    if (!data.name || !data.height || !data.weight || data.temperament) {
-        errors.name= "Fields missing";
+    if (!input.name.trim()) {
+        errors.name= "Please select a name for your dog";
     }
+    else if (parseInt(input.name)) {
+        errors.name= "Please use at least one letter at the beginning";
+    }
+
+    if (!input.temperaments) {
+        errors.temperaments= "Please select at least one temperament";
+    }
+
+    if (!input.height || !input.weight) {
+        errors.height= "Required field";
+        errors.weight= "Required field";
+    }
+
     return errors;
 }
 
@@ -55,17 +68,30 @@ export default function DogCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(postDog(data));
-        alert("Created successfully");
-        setData({
-            name: "",
-            image: "",
-            height: "",
-            weight: "",
-            lifespan: "",
-            temperaments: []
-        })
-        history.push("/dogs");
+        setErrors(
+            validate({
+                ...data,
+                [e.target.name]: e.target.value
+            })
+        );
+
+        if (!Object.keys(errors).length && data.name && data.temperaments && data.height && data.weight) {
+            dispatch(postDog(data));
+            alert("Dog created successfully!");
+            setData({
+                name: "",
+                image: "",
+                height: "",
+                weight: "",
+                lifespan: "",
+                temperaments: []
+            })
+        }
+        else {
+            alert("Sorry, we couldn't create your dog");
+            return;
+        }
+        history.goBack();
     }
 
     function handleDelete(t) {
@@ -83,14 +109,15 @@ export default function DogCreate() {
                 <h1>
                     Create your own Dog!
                 </h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => handleSubmit(e)}>
                     <div>
                         <label>Name: </label>
                         <input
+                        placeholder="Dog name"
                         type="text"
                         name="name"
                         value={data.name}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
                         />
                         {
                             errors.name && (
@@ -103,40 +130,67 @@ export default function DogCreate() {
                     <div>
                         <label>Image: </label>
                         <input
-                        type="text"
+                        placeholder="Dog image"
+                        type="img"
                         name="image"
                         value={data.image}
-                        onChange={handleChange}
+                        alt="Not found"
+                        onChange={(e) => handleChange(e)}
                         />
                     </div>
                     <div>
                         <label>Height: </label>
                         <input
+                        placeholder="Dog height"
                         type="number"
                         name="height"
                         value={data.height}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
                         />
+                        {
+                            errors.height && (
+                                <p>
+                                    {errors.height}
+                                </p>
+                            )
+                        }
                     </div>
                     <div>
                         <label>Weight: </label>
                         <input
+                        placeholder="Dog weight"
                         type="number"
                         name="weight"
                         value={data.weight}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
                         />
+                        {
+                            errors.weight && (
+                                <p>
+                                    {errors.weight}
+                                </p>
+                            )
+                        }
                     </div>
                     <div>
                         <label>Life Span: </label>
                         <input
+                        placeholder="Dog life span"
                         type="number"
                         name="lifespan"
                         value={data.lifespan}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
                         />
                     </div>
-                    <select onChange={handleSelect}>
+                    <label>Temperaments: </label>
+                    <select onChange={(e) => handleSelect(e)}>
+                        {
+                            errors.temperaments && (
+                                <p>
+                                    {errors.temperaments}
+                                </p>
+                            )
+                        }
                         {
                             stateTemperaments.map((t) => (
                                 <option value={t.name}>
@@ -162,12 +216,15 @@ export default function DogCreate() {
                     </Link>
                 </form>
                 {
-                    data.temperaments.map(t => <div>
-                           <p>{t}</p>
-                           <button onClick={() => handleDelete(t)}>
+                    data.temperaments.map(t => 
+                    <ul key={t}>
+                        <li>
+                            <p>{t}</p>
+                            <button onClick={() => handleDelete(t)}>
                                 X
-                           </button>
-                       </div>
+                            </button>
+                        </li>
+                    </ul>
                     )
                 }
             </div>
