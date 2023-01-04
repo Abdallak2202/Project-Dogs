@@ -2,6 +2,13 @@ import React, {Fragment} from "react";
 // import CSS
 
 export default function DogCard({id, name, image, temperaments}) {
+    if (typeof temperaments==="object") {
+        var temperamentNames= [];
+        for (let i=0; i<temperaments.length; i++) {
+            temperamentNames.push(temperaments[i].name);
+        }
+    };
+
     return (
         <Fragment key={id}>
             <div>
@@ -9,7 +16,7 @@ export default function DogCard({id, name, image, temperaments}) {
                     {name}
                 </h1>
                 <h5>
-                    <p>{temperaments}</p>
+                    <p>{!temperamentNames? temperaments : temperamentNames.join(" ")}</p>
                 </h5>
                 <img src={image} alt="404 not found"/>
             </div>

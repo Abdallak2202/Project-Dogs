@@ -44,9 +44,9 @@ export default function DogCreate() {
         temperaments: []
     })
 
-    useEffect(() => {
+    /* useEffect(() => {
         dispatch(getTemperaments());
-    }, [dispatch]);
+    }, [dispatch]); */
 
     function handleChange(e) {
         setData({

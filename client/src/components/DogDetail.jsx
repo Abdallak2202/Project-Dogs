@@ -18,13 +18,61 @@ export default function DogDetail() {
         }
     }, [id, dispatch]);
 
-    const stateDetails= useSelector((state) => state.details);
+    var stateDetails= useSelector((state) => state.details);
+
+    if (typeof stateDetails.temperaments==="object") {
+        var temperamentNames= [];
+        for (let i=0; i<stateDetails.temperaments.length; i++) {
+            temperamentNames.push(stateDetails.temperaments[i].name);
+        };
+        var dogObject= {
+            name: stateDetails.name,
+            image: stateDetails.image,
+            temperaments: temperamentNames.join(", "),
+            height: stateDetails.height,
+            weight: stateDetails.weight,
+            lifespan: stateDetails.lifespan
+        };
+    };
 
 
-    return (
-        <div>
-            {
-                stateDetails.length>0?
+    if (dogObject) {
+        return (
+            <div>
+
+                <div>
+                    <h1>
+                        {
+                            dogObject.name
+                        }
+                    </h1>
+                    <img src={dogObject.image} alt="404 not found"/>
+                    <h3>
+                        Temperament: {dogObject.temperaments}
+                    </h3>
+                    <h3>
+                        Height: {dogObject.height}
+                    </h3>
+                    <h3>
+                        Weight: {dogObject.weight}
+                    </h3>
+                    <h3>
+                        Life Span: {dogObject.lifespan}
+                    </h3>
+                </div>
+            
+            <Link to="/dogs">
+                <button>
+                    Main Page
+                </button>
+            </Link>
+        </div>
+        )
+    }
+    else if (stateDetails.length>0) {
+        return (
+            <div>
+            
                 <div>
                     <h1>
                         {
@@ -34,7 +82,6 @@ export default function DogDetail() {
                     <img src={stateDetails[0].image} alt="404 not found"/>
                     <h3>
                         Temperament: {stateDetails[0].temperaments}
-                        {/* Maybe with .map */}
                     </h3>
                     <h3>
                         Height: {stateDetails[0].height}
@@ -45,14 +92,21 @@ export default function DogDetail() {
                     <h3>
                         Life Span: {stateDetails[0].lifespan}
                     </h3>
-                </div> :
-                <p>Loading...</p>
-            }
+                </div>
+            
             <Link to="/dogs">
                 <button>
                     Main Page
                 </button>
             </Link>
         </div>
-    )
+        )
+    }
+    else {
+        return (
+            <p>Sorry, the ID doesn't match with any dog</p>
+        )
+    }
+
+
 }
