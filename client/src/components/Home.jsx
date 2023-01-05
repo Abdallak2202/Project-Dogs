@@ -8,14 +8,19 @@ import {getDogs, getTemperaments, filterByTemperament, filterByOrigin, orderByRa
 import DogCard from "./DogCard";
 import SearchBar from "./SearchBar";
 import Paging from "./Paging";
+import { all } from "axios";
 // import CSS
 
 
 export default function Home() {
     const dispatch= useDispatch();
 
-    const allDogs= useSelector((state) => state.dogs);
+    var allDogs= useSelector((state) => state.dogs);
     const allTemperaments= useSelector((state) => state.temperaments);
+
+    if (allDogs.created) {
+        allDogs= [allDogs];
+    };
 
     const [order, setOrder]= useState("");
 

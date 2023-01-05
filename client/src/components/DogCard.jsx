@@ -16,7 +16,7 @@ export default function DogCard({id, name, image, temperaments}) {
                     {name}
                 </h1>
                 <h5>
-                    <p>{!temperamentNames? temperaments : temperamentNames.join(" ")}</p>
+                    <p>{!temperamentNames? temperaments : temperamentNames.join(", ")}</p>
                 </h5>
                 <img src={image} alt="404 not found"/>
             </div>

@@ -21,6 +21,7 @@ export const getDogs= () => async (dispatch) => {
 export const getDogName= (name) => async (dispatch) => {
     try {
         var oneDog= await axios.get(`${urlDogs}?name=${name}`);
+        console.log("oneDog: ",oneDog);
 
             return dispatch({
                 type: "GET_DOG_NAME",
@@ -29,7 +30,7 @@ export const getDogName= (name) => async (dispatch) => {
     }
     catch(e) {
         console.log(e); // add functionality
-        // alert("Dog not found");
+        alert("Dog not found (make sure you're typing the name correctly!)");
     }
 }
 
@@ -63,7 +64,6 @@ export const getTemperaments= () => async (dispatch) => {
             let temperamentName= t.name;
             temperaments.push(temperamentName);
         })
-        console.log(temperaments);
 
         return dispatch({
             type: "GET_TEMPERAMENTS",
