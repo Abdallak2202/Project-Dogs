@@ -14,6 +14,13 @@ export default function rootReducer(state=initialState, action) {
                 dogs: action.payload
             };
 
+        case "HANDLE_RESET":
+            return {
+                ...state,
+                allDogs: action.payload,
+                dogs: action.payload
+            }
+
         case "GET_DOG_NAME":
             return {
                 ...state,
@@ -33,18 +40,22 @@ export default function rootReducer(state=initialState, action) {
             };
 
         case "FILTER_BY_TEMPERAMENT":
-            const allDogs= state.dogs;
+            const allDogs= state.allDogs;
 
-            const filterTemperament= action.payload==="temperaments"?
-            state.allDogs :
-            allDogs.filter(d => {
-                return d.temperaments?
-                d.temperaments.includes(action.payload) :
-                    d.temperaments?.map(t => t.name).includes(action.payload);
-            });
-
-            // use .join(" ") before .includes
-            // OR .some() with if statement for db dogs
+            if (action.payload==="temperaments") {
+                var filterTemperament= state.allDogs;
+            }
+            else {
+                filterTemperament= allDogs.filter(d => {
+                    if (!d.temperaments) return false;
+                    else if (d.created) {
+                        return d.temperaments.some(t => t.name===action.payload);
+                    }
+                    else {
+                        return d.temperaments.includes(action.payload);
+                    }
+                })
+            }
 
             return {
                 ...state,
@@ -65,7 +76,7 @@ export default function rootReducer(state=initialState, action) {
 
         case "ORDER_BY_RACE":
             const sortOrder= action.payload==="asc"?
-            state.allDogs.sort(function (a, b) {
+            state.dogs.sort(function (a, b) {
                 if (a.name>b.name) {
                     return 1;
                 }
@@ -74,7 +85,7 @@ export default function rootReducer(state=initialState, action) {
                 }
                 return 0;
             }) :
-            state.allDogs.sort(function (a, b) {
+            state.dogs.sort(function (a, b) {
                 if (a.name>b.name) {
                     return -1;
                 }
@@ -90,30 +101,40 @@ export default function rootReducer(state=initialState, action) {
             };
 
         case "ORDER_BY_WEIGHT":
-            let sortWeight= action.payload==="lowest weight" ?
-            state.dogs.sort(function (a, b) {
-                if (a.weight>b.weight) {
-                    return 1;
-                }
-                if (b.weight>a.weight) {
-                    return -1;
-                }
-                return 0;
-            }) :
-            state.dogs.sort(function (a, b) {
-                if (a.weight>b.weight) {
-                    return -1;
-                }
-                if (b.weight>a.weight) {
-                    return 1;
-                }
-                return 0;
-            })
+            var stateAllDogs= state.allDogs;
+            if (action.payload==="filter by weight") {
+                var sortWeight= stateAllDogs;
+            };
+
+            if (action.payload==="lowest weight") {
+                sortWeight= state.dogs.sort(function (a, b) {
+                    if (a.weight.substr(0, 2)>b.weight.substr(0, 2)) {
+                        return 1;
+                    }
+                    if (b.weight.substr(0, 2)>a.weight.substr(0, 2)) {
+                        return -1;
+                    }
+                    return 0;
+                })
+            };
+
+            if (action.payload==="highest weight") {
+                sortWeight= state.dogs.sort(function (a, b) {
+                    if (a.weight.substr(0, 2)>b.weight.substr(0, 2)) {
+                        return -1;
+                    }
+                    if (b.weight.substr(0, 2)>a.weight.substr(0, 2)) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            };
 
             return {
                 ...state,
                 dogs: sortWeight
             }
+
 
         default:
             return {...state};

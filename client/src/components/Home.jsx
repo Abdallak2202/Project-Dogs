@@ -8,14 +8,28 @@ import {getDogs, getTemperaments, filterByTemperament, filterByOrigin, orderByRa
 import DogCard from "./DogCard";
 import SearchBar from "./SearchBar";
 import Paging from "./Paging";
-import { all } from "axios";
 // import CSS
 
 
 export default function Home() {
     const dispatch= useDispatch();
 
+    const [sortDogs, setSortDogs]= useState(false);
+
     var allDogs= useSelector((state) => state.dogs);
+    if (allDogs.length>172 && !sortDogs) {
+        allDogs.sort(function (a, b) {
+            if (a.name>b.name) {
+                return 1;
+            }
+            if (b.name>a.name) {
+                return -1;
+            }
+            return 0;
+        });
+        console.log("allDogs.length: ", allDogs.length);
+    };
+
     const allTemperaments= useSelector((state) => state.temperaments);
 
     if (allDogs.created) {
@@ -28,11 +42,15 @@ export default function Home() {
 
     const [dogPerPage, setDogPerPage]= useState(8);
 
+    const [reset, setReset]= useState(0);
+
     const indexLastDog= currentPage * dogPerPage;
 
     const indexFirstDog= indexLastDog-dogPerPage;
 
     const current= allDogs.slice(indexFirstDog, indexLastDog);
+    console.log("allDogs: ",allDogs)
+    console.log("current: ",current);
 
     const paging= (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -55,6 +73,7 @@ export default function Home() {
 
     function handleSort(e) {
         e.preventDefault();
+        setSortDogs(true);
         dispatch(orderByRace(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
@@ -62,15 +81,22 @@ export default function Home() {
 
     function handleWeightSort(e) {
         e.preventDefault();
+        setSortDogs(true);
         dispatch(orderByWeight(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
     };
 
+    function handleReset() {
+        setReset(reset+0.0001);
+        setSortDogs(false);
+        setCurrentPage(1);
+    };
+
 
     useEffect(() => {
         dispatch(getDogs());
-    }, [dispatch]);
+    }, [dispatch, reset]);
 
     useEffect(() => {
         dispatch(getTemperaments());
@@ -83,7 +109,10 @@ export default function Home() {
 
             <div>
                 <div>
-                    <select onClick={e => handleSort(e)}>
+                    <select onChange={e => handleSort(e)}>
+                        <option>
+                            Set alphabetic order
+                        </option>
                         <option value="asc">
                             A-Z
                         </option>
@@ -104,7 +133,7 @@ export default function Home() {
                         </option>
                     </select>
                     <select onChange={e => handleFilterTemperament(e)}>
-                        <option value="temperament">
+                        <option value="temperaments">
                             Filter by temperament
                         </option>
                         {
@@ -139,6 +168,9 @@ export default function Home() {
                             Create New Dog
                         </button>
                     </Link>
+                    <button onClick={handleReset}>
+                        Clear filters
+                    </button>
                 </div>
             </div>
 
