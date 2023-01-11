@@ -16,15 +16,15 @@ module.exports = (sequelize) => {
       unique: true
     },
     height: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: false
     },
     weight: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.STRING,
       allowNull: false
     },
     lifespan: {
-      type: DataTypes.FLOAT
+      type: DataTypes.STRING
     },
     image: {
       type: DataTypes.BLOB,
