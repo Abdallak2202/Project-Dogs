@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-// import CSS
+import "../CSS/DogCard.css"
 
 export default function DogCard({id, name, image, temperaments}) {
     if (typeof temperaments==="object") {
@@ -11,14 +11,15 @@ export default function DogCard({id, name, image, temperaments}) {
 
     return (
         <Fragment key={id}>
-            <div>
-                <h1>
+            <div className="card-DC">
+                <h1 className="name-DC">
                     {name}
                 </h1>
-                <h5>
+                <h5 className="type-DC">
                     <p>{!temperamentNames? temperaments : temperamentNames.join(", ")}</p>
                 </h5>
-                <img src={image} alt="404 not found"/>
+                <img className="image-DC" 
+                src={image} alt="404 not found"/>
             </div>
         </Fragment>
     )

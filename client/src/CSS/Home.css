@@ -1,0 +1,111 @@
+.paging-H {
+    color: rgba(255, 255, 255, 0);
+}
+
+.display-H {
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-gap: 10px; */
+}
+
+
+/* background-image: url("");
+background-color: #e2e0e0;
+height: 100%;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+position: relative;
+width: 100%; */
+
+.nav-H {
+
+}
+
+
+/* display: flex;
+justify-content: space-between;
+align-items: center; */
+
+.new-container-H {
+    margin: 10px;
+}
+
+.select-H {
+    border-color: black;
+    color: black;
+    border-width: 2.5px;
+    border-radius: 8px;
+    transform: scale(1.2);
+    margin-left: 4px;
+    margin-right: 35px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(247, 239, 230);
+    cursor: pointer;
+}
+
+.button-H {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(247, 239, 230);
+    border-color: aliceblue;
+    border-radius: 5px;
+    transform: scale(1.4);
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+.button-H:hover, .button-H:active {
+    background-color: rgb(247, 194, 201);
+    color: white;
+    cursor: pointer;
+}
+
+.clear-H {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: lightcoral;
+    border-radius: 5px;
+    border-color: aliceblue;
+    transform: scale(1.4);
+    margin-top: 5px;
+    margin-left: 20px;
+}
+.clear-H:hover, .clear-H:active {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* height: 50px;
+width: 50px;
+margin-left: 10px;
+margin-top: 10px; */
+
+
+/*contenedor-filtros, container-searchbar*/
+
+
+/* to make 2 rows of 4 dogs */
+
+/* <div class="flex-container">
+  <div class="flex-item">Item 1</div>
+  <div class="flex-item">Item 2</div>
+  <div class="flex-item">Item 3</div>
+  <div class="flex-item">Item 4</div>
+  <div class="flex-item">Item 5</div>
+  <div class="flex-item">Item 6</div>
+  <div class="flex-item">Item 7</div>
+  <div class="flex-item">Item 8</div>
+</div>
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 400px;
+}
+
+.flex-item {
+  width: 25%;
+} */

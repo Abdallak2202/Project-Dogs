@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useParams} from "react-router-dom";
 
 import {getDogDetail} from "../actions";
-// import CSS
+import "../CSS/DogDetail.css"
 
 
 export default function DogDetail() {
@@ -40,29 +40,34 @@ export default function DogDetail() {
         return (
             <div>
 
-                <div>
-                    <h1>
-                        {
-                            dogObject.name
-                        }
-                    </h1>
-                    <img src={dogObject.image} alt="404 not found"/>
-                    <h3>
-                        Temperament: {dogObject.temperaments}
-                    </h3>
-                    <h3>
-                        Height: {dogObject.height}
-                    </h3>
-                    <h3>
-                        Weight: {dogObject.weight}
-                    </h3>
-                    <h3>
-                        Life Span: {dogObject.lifespan}
-                    </h3>
+                <div className="container-DD">
+                    <div className="container-name-DD">
+                        <h1 className="name-DD">
+                            {
+                                dogObject.name
+                            }
+                        </h1>
+                        <img className="image-DD"
+                        src={dogObject.image} alt="404 not found"/>
+                    </div>
+                    <div className="container-attributes-DD">
+                        <h3>
+                            Temperament: {dogObject.temperaments}
+                        </h3>
+                        <h3>
+                            Height: {dogObject.height}
+                        </h3>
+                        <h3>
+                            Weight: {dogObject.weight}
+                        </h3>
+                        <h3>
+                            Life Span: {dogObject.lifespan}
+                        </h3>
+                    </div>
                 </div>
             
             <Link to="/dogs">
-                <button>
+                <button className="button-DD">
                     Main Page
                 </button>
             </Link>
@@ -73,29 +78,34 @@ export default function DogDetail() {
         return (
             <div>
             
-                <div>
-                    <h1>
-                        {
-                            stateDetails[0].name
-                        }
-                    </h1>
-                    <img src={stateDetails[0].image} alt="404 not found"/>
-                    <h3>
-                        Temperament: {stateDetails[0].temperaments}
-                    </h3>
-                    <h3>
-                        Height: {stateDetails[0].height}
-                    </h3>
-                    <h3>
-                        Weight: {stateDetails[0].weight}
-                    </h3>
-                    <h3>
-                        Life Span: {stateDetails[0].lifespan}
-                    </h3>
+                <div className="container-DD">
+                    <div className="container-name-DD">
+                        <h1 className="name-DD">
+                            {
+                                stateDetails[0].name
+                            }
+                        </h1>
+                        <img className="image-DD"
+                        src={stateDetails[0].image} alt="404 not found"/>
+                    </div>
+                    <div className="container-attributes-DD">
+                        <h3>
+                            Temperament: {stateDetails[0].temperaments}
+                        </h3>
+                        <h3>
+                            Height: {stateDetails[0].height}
+                        </h3>
+                        <h3>
+                            Weight: {stateDetails[0].weight}
+                        </h3>
+                        <h3>
+                            Life Span: {stateDetails[0].lifespan}
+                        </h3>
+                    </div>
                 </div>
             
             <Link to="/dogs">
-                <button>
+                <button className="button-DD">
                     Main Page
                 </button>
             </Link>
@@ -104,7 +114,17 @@ export default function DogDetail() {
     }
     else {
         return (
-            <p>Sorry, the ID doesn't match with any dog</p>
+            <div>
+                <p>
+                    Sorry, the ID doesn't match with any dog
+                </p>
+
+                <Link to="/dogs">
+                <button className="button-DD">
+                    Main Page
+                </button>
+                </Link>
+            </div>
         )
     }
 

@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 
 import { getDogs, orderByRace, postDog, getTemperaments } from "../actions";
-// import CSS
+import "../CSS/DogCreate.css"
 
 function validate(input) {
     var error= {};
@@ -118,13 +118,15 @@ export default function DogCreate() {
 
 
     return (
-        <div>
+        <div className="background-form">
 
-            <div>
-                <h1>
+            <div className="main-container">
+                <h1 className="title">
                     Create your own Dog!
                 </h1>
-                <form onSubmit={(e) => handleSubmit(e)}>
+                <form className="form"
+                onSubmit={(e) => 
+                handleSubmit(e)}>
                     <div>
                         <label>Name: </label>
                         <input
@@ -211,8 +213,11 @@ export default function DogCreate() {
                             )
                         }
                     </div>
-                    <label>Temperaments: </label>
-                    <select onChange={(e) => handleSelect(e)}>
+                    <label className="temperament-item-crea">
+                        Temperaments: 
+                    </label>
+                    <select  className="select"
+                    onChange={(e) => handleSelect(e)}>
                         <option value="" disabled selected>Choose your temperaments</option>
                         {
                             stateTemperaments.map((t) => (
@@ -229,7 +234,8 @@ export default function DogCreate() {
                                     </p>
                                 )
                             }
-                    <button type="submit">
+                    <button className="create-now-form"
+                    type="submit">
                         Create Now!
                     </button>
                     <ul>
@@ -240,7 +246,7 @@ export default function DogCreate() {
                         </li>
                     </ul>
                     <Link to="/dogs">
-                        <button>
+                        <button className="back">
                             Back to Main Page
                         </button>
                     </Link>
@@ -250,7 +256,8 @@ export default function DogCreate() {
                     <ul>
                         <li key={t}>
                             <p>{t}</p>
-                            <button onClick={() => handleDelete(t)}>
+                            <button className="button-X-crea"
+                            onClick={() => handleDelete(t)}>
                                 X
                             </button>
                         </li>

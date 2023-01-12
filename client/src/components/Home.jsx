@@ -8,7 +8,8 @@ import {getDogs, getTemperaments, filterByTemperament, filterByOrigin, orderByRa
 import DogCard from "./DogCard";
 import SearchBar from "./SearchBar";
 import Paging from "./Paging";
-// import CSS
+// CSS
+import "../CSS/Home.css"
 
 
 export default function Home() {
@@ -107,9 +108,11 @@ export default function Home() {
     return (
         <div>
 
-            <div>
-                <div>
-                    <select onChange={e => handleSort(e)}>
+            <div className="nav-H">
+                <div className="new-container-H">
+                    <select className="select-H"
+                    onChange={e => 
+                    handleSort(e)}>
                         <option>
                             Set alphabetic order
                         </option>
@@ -121,7 +124,8 @@ export default function Home() {
                         </option>
                     </select>
 
-                    <select onChange={e => handleWeightSort(e)}>
+                    <select className="select-H"
+                    onChange={e => handleWeightSort(e)}>
                         <option value="filter by weight">
                             Filter by weight
                         </option>
@@ -132,7 +136,8 @@ export default function Home() {
                             Highest weight
                         </option>
                     </select>
-                    <select onChange={e => handleFilterTemperament(e)}>
+                    <select className="select-H"
+                    onChange={e => handleFilterTemperament(e)}>
                         <option value="temperaments">
                             Filter by temperament
                         </option>
@@ -147,7 +152,8 @@ export default function Home() {
                         }
                     </select>
 
-                    <select onChange={e => handleFilterOrigin(e)}>
+                    <select className="select-H"
+                    onChange={e => handleFilterOrigin(e)}>
                         <option value="all">
                             All
                         </option>
@@ -164,11 +170,12 @@ export default function Home() {
                 </div>
                 <div>
                     <Link to={"/createDog"}>
-                        <button>
+                        <button className="button-H">
                             Create New Dog
                         </button>
                     </Link>
-                    <button onClick={handleReset}>
+                    <button className="clear-H"
+                    onClick={handleReset}>
                         Clear filters
                     </button>
                 </div>
@@ -176,7 +183,7 @@ export default function Home() {
 
 
 
-            <div>
+            <div className="paging-H">
 
 
 
@@ -186,6 +193,9 @@ export default function Home() {
                 paging={paging}
                 />
 
+            </div>
+
+            <div className="display-H">
 
                 {
                     current.length!==0 ?

@@ -1,0 +1,22 @@
+.paging-P {
+    display: flex;
+    margin-top: 70px;
+    margin-bottom: 60px;
+    margin-left: -28px;
+}
+
+.button-P {
+    width: 50px;
+    height: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: antiquewhite;
+    margin-right: 10px;
+    border-width: 4px;
+    border-radius: 7px;
+    border-color: aliceblue;
+}
+.button-P:hover, .button-P:active {
+    background-color: rgb(247, 194, 201);
+    color: white;
+    cursor: pointer;
+}

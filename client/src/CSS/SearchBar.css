@@ -1,0 +1,24 @@
+.searchbar-SB {
+    display: flex;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: medium;
+}
+
+.button-SB{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(247, 239, 230);
+    border-radius: 5px;
+    transform: scale(1.4);
+    margin-top: 5px;
+    margin-left: 11px;
+    border-color: aliceblue;
+}
+
+.button-SB:hover, .button-SB:active {
+    background-color: rgb(247, 194, 201);
+    color: white;
+    cursor: pointer;
+}
