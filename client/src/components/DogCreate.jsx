@@ -36,6 +36,7 @@ function validate(input) {
 
 export default function DogCreate() {
     const dispatch= useDispatch();
+
     const history= useHistory();
 
     const stateTemperaments= useSelector((state) => state.temperaments);
@@ -53,6 +54,8 @@ export default function DogCreate() {
         temperaments: []
     })
 
+    const [imgSrc, setImgSrc] = useState('');
+
     function handleChange(e) {
         setData({
             ...data,
@@ -63,6 +66,23 @@ export default function DogCreate() {
             [e.target.name]: e.target.value
         }))
     }
+
+    function handleImageChange(e) {
+        const file = e.target.files[0];
+        console.log("file: ", file);
+        const reader = new FileReader();
+        console.log("reader: ", reader);
+        reader.onloadend = () => {
+          setData({
+            ...data,
+            image: reader.result/* .split(",")[1] */
+          })
+          setImgSrc(reader.result);
+        }
+        reader.readAsDataURL(file);
+      };
+
+      console.log("image: ", data.image);
 
     function handleSelect(e) {
         setData({
@@ -90,6 +110,12 @@ export default function DogCreate() {
                 alert(errors.equal);
             }
         })
+
+        if (data.temperaments.length===0) {
+            errors.empty= "Please select at least one temperament";
+            alert(errors.empty);
+        }
+
         if (!Object.keys(errors).length && data.name && data.temperaments && data.height && data.weight && data.lifespan) {
             dispatch(postDog(data));
             alert("Dog created successfully!");
@@ -155,12 +181,12 @@ export default function DogCreate() {
                         <label>Image: </label>
                         <input
                         placeholder="Dog image"
-                        type="img"
+                        type="file"
                         name="image"
-                        value={data.image}
                         alt="Not found"
-                        onChange={(e) => handleChange(e)}
+                        onChange={(e) => handleImageChange(e)}
                         />
+                        <img src={imgSrc} alt="Preview" />
                     </div>
                     <div>
                         <label>Height: </label>
@@ -409,3 +435,43 @@ function ImageUploadForm() {
 export default ImageUploadForm;
 
 */
+
+
+/* OPTION TO UPLOAD AN IMAGE */
+
+/* const [file, setFile] = useState(null);
+const [imageName, setImageName] = useState(null);
+
+function handleImageChange(event) {
+  const file = event.target.files[0];
+  setFile(file);
+  setImageName(file.name);
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setImgSrc(reader.result);
+  }
+  reader.readAsDataURL(file);
+}
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('name', data.name);
+    formData.append('height', data.height);
+    formData.append('weight', data.weight);
+    formData.append('lifespan', data.lifespan);
+    formData.append('imageName', imageName);
+  
+    // post the form data to the server
+    dispatch(postDog(formData));
+    setFile(null);
+    setImageName(null);
+    setData({
+      name: "",
+      height: "",
+      weight: "",
+      lifespan: "",
+    });
+    history.goBack();
+  }   */

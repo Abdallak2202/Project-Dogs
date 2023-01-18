@@ -76,6 +76,7 @@ export const getTemperaments= () => async (dispatch) => {
 }
 
 export const postDog= (data) => async () => {
+    console.log("data action: ", data);
     let newDog= {
         name: data.name,
         image: data.image,
@@ -88,13 +89,6 @@ export const postDog= (data) => async () => {
 
     console.log(response);
     return response;
-
-        /* name: "",
-        image: "",
-        height: "",
-        weight: "",
-        lifespan: "",
-        temperaments: [] */
 }
 
 export const filterByTemperament= (payload) => {

@@ -28,7 +28,6 @@ export default function Home() {
             }
             return 0;
         });
-        console.log("allDogs.length: ", allDogs.length);
     };
 
     const allTemperaments= useSelector((state) => state.temperaments);
@@ -50,8 +49,47 @@ export default function Home() {
     const indexFirstDog= indexLastDog-dogPerPage;
 
     const current= allDogs.slice(indexFirstDog, indexLastDog);
-    console.log("allDogs: ",allDogs)
-    console.log("current: ",current);
+    
+    /* current.map(d => {
+        if (d.created) {
+            console.log(d.image);
+            const data= d.image;
+            const buffer= Buffer.from(data.data);
+            const reader= new FileReader();
+            reader.readAsDataURL(d.image.data);
+        }
+    }) */
+
+    /* const data = {type: 'Buffer', data: Array(466843)};
+    const buffer = Buffer.from(data.data);
+    const base64EncodedString = buffer.toString('base64');
+    console.log(base64EncodedString); */
+
+    // MAKE A BLOB FROM THE D.IMAGE.DATA (I think it's already a blob...)
+
+    /* const data = new Uint8Array([1, 2, 3]);
+    const blob = new Blob([data], { type: 'application/octet-stream' });
+    console.log(blob) */
+
+    // CONVERT THE BLOB OBJECT TO A BASE64 STRING (I started above, finish it)
+
+    /* function App() {
+        const [data, setData] = useState([
+          { name: 'Image 1', image:  binary buffer image  },
+          { name: 'Image 2', image:  binary buffer image  },
+          { name: 'Image 3', image:  binary buffer image  },
+        ]);
+      
+        const handleFile = (index) => (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => {
+            const newData = [...data];
+            newData[index].image = reader.result;
+            setData(newData);
+          };
+        }; */
 
     const paging= (pageNumber) => {
         setCurrentPage(pageNumber);
