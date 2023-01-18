@@ -16,7 +16,10 @@ const {getDbIdDog}= require("../controllers/controller-2");
 
 
 router.post("/", async (req, res) => {
-    const {name, height, weight, lifespan, temperament}= req.body;
+    console.log(req.body);
+    const {name, height, weight, lifespan, image, temperament}= req.body;
+    
+    //const binaryString = Buffer.from(image, 'base64').toString('binary');
     
     if (!name || !height || !weight || !temperament) {
         return res.status(404).send("The dog needs at least a name, height, weight and temperament");
@@ -27,7 +30,8 @@ router.post("/", async (req, res) => {
                 name: name,
                 height: height,
                 weight: weight,
-                lifespan: lifespan
+                lifespan: lifespan,
+                image: image
             })
 
             const temperamentDb= await Temperament.findAll({
