@@ -19,8 +19,6 @@ router.post("/", async (req, res) => {
     console.log(req.body);
     const {name, height, weight, lifespan, image, temperament}= req.body;
     
-    //const binaryString = Buffer.from(image, 'base64').toString('binary');
-    
     if (!name || !height || !weight || !temperament) {
         return res.status(404).send("The dog needs at least a name, height, weight and temperament");
     }
