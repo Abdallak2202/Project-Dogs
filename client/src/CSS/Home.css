@@ -3,10 +3,50 @@
 }
 
 .display-H {
-    /* display: grid;
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    grid-gap: 10px; */
+    grid-gap: 10px;
+}
+
+.anchor-H {
+    width: 50px;
+    height: 100%;
+
+    /* try extra stuff just to see */
+
+    /* CSS */
+    /* .header {
+        height: 50px;
+    }
+      
+    .logo {
+        width: 50px;
+        height: 100%;
+        background: url(http://imgh.us/gir_zim.gif)no-repeat;
+        background-size: contain;
+        display: inline-block;
+    }
+      
+    nav {
+        position: relative;
+        z-index: 1;
+        bottom: 15px;
+    } */
+
+    /* HTML */
+    /* <header class='site-title'>
+        <a class="logo" href="#/" title='logo'></a>
+        <nav>
+            <a href='#/' title='link1'>LINK1</a>&nbsp;
+            <a href='#/' title='lin2k'>LINK2</a>
+        </nav>
+    </header> */
+
+    /* position:static; 
+    width:500px; 
+    height:228px; 
+    margin: 20px auto 30px auto; */
 }
 
 

@@ -2,7 +2,7 @@ import {React, useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 
-import { getDogs, orderByRace, postDog, getTemperaments } from "../actions";
+import {postDog} from "../actions";
 import "../CSS/DogCreate.css"
 
 function validate(input) {
@@ -45,16 +45,16 @@ export default function DogCreate() {
 
     const [errors, setErrors]= useState({});
 
+    const [imgSrc, setImgSrc]= useState("");
+
     const [data, setData]= useState({
         name: "",
-        image: "",
         height: "",
         weight: "",
         lifespan: "",
+        image: "",
         temperaments: []
     })
-
-    const [imgSrc, setImgSrc] = useState('');
 
     function handleChange(e) {
         setData({
@@ -67,23 +67,6 @@ export default function DogCreate() {
         }))
     }
 
-    function handleImageChange(e) {
-        const file = e.target.files[0];
-        console.log("file: ", file);
-        const reader = new FileReader();
-        console.log("reader: ", reader);
-        reader.onloadend = () => {
-          setData({
-            ...data,
-            image: reader.result/* .split(",")[1] */
-          })
-          setImgSrc(reader.result);
-        }
-        reader.readAsDataURL(file);
-      };
-
-      console.log("image: ", data.image);
-
     function handleSelect(e) {
         setData({
             ...data,
@@ -93,6 +76,24 @@ export default function DogCreate() {
             ...data,
             temperaments: [...data.temperaments, e.target.value]
         }))
+    }
+
+    const handleFiles = (file) => {
+        var reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = function (e) { 
+        var rawLog = reader.result.split(',')[1];
+        var dataSend = { dataReq: { data: rawLog, name: file.name, type: file.type }, fname: "uploadFilesToGoogleDrive" }; //preapre info to send to API
+        fetch('https://script.google.com/macros/s/AKfycbzy_gH-UG6D8z6O4PIZWytftMaUaZqYG9cRtygGXnRwYo-Vox30AKE50v7T0iowbyr4/exec', //your AppsScript URL
+            { method: "POST", body: JSON.stringify(dataSend)})
+            .then(res => res.json()).then(res => {
+                setData({
+                    ...data,
+                    image: res.url
+                })
+            }).catch(e => console.log(e))
+        }
+        setImgSrc(reader.result);
     }
 
     function handleSubmit(e) {
@@ -117,11 +118,15 @@ export default function DogCreate() {
         }
 
         if (!Object.keys(errors).length && data.name && data.temperaments && data.height && data.weight && data.lifespan) {
+            
+            data.height= data.height+" cm";
+            data.weight= data.weight+" kg";
+            data.lifespan= data.lifespan+" years";
+
             dispatch(postDog(data));
             alert("Dog created successfully!");
             setData({
                 name: "",
-                image: "",
                 height: "",
                 weight: "",
                 lifespan: "",
@@ -178,15 +183,14 @@ export default function DogCreate() {
                         }
                     </div>
                     <div>
-                        <label>Image: </label>
+                        <label>
+                            Image:
+                        </label>
                         <input
-                        placeholder="Dog image"
                         type="file"
-                        name="image"
-                        alt="Not found"
-                        onChange={(e) => handleImageChange(e)}
+                        onChange={(e) => handleFiles(e.target.files[0])}
                         />
-                        <img src={imgSrc} alt="Preview" />
+                        {imgSrc}
                     </div>
                     <div>
                         <label>Height: </label>
@@ -295,183 +299,3 @@ export default function DogCreate() {
         </div>
     )
 }
-
-
-
-/* import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-function ImageUploadForm({ setData }) {
-  const [image, setImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [isValid, setIsValid] = useState(false);
-
-  const handleChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const fileName = file.name;
-      const fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-      if (fileExtension === "jpg" || fileExtension === "jpeg" || fileExtension === "png") {
-        const reader = new FileReader();
-        reader.onload = () => {
-          setImage(file);
-          setPreviewUrl(reader.result);
-          setIsValid(true);
-          setData({ ...data, image: file }); // update the image field in the data state variable
-        };
-        reader.readAsDataURL(file);
-      } else {
-        setImage(null);
-        setPreviewUrl(null);
-        setIsValid(false);
-      }
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // do something with the image (upload it to a server, etc.)
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Choose an image:
-          <input type="file" onChange={handleChange} />
-        </label>
-        <button type="submit" disabled={!isValid}>Submit</button>
-      </form>
-      {previewUrl && (
-        <img src={previewUrl} alt="Preview" />
-      )}
-    </div>
-  );
-}
-
-export default function DogCreate() {
-    const dispatch= useDispatch();
-    const history= useHistory();
-    const stateTemperaments= useSelector((state) => state.temperaments);
-
-    const [errors, setErrors]= useState({});
-
-    const [data, setData]= useState({
-        name: "",
-        image: "",
-        height: "",
-        weight: "",
-        lifespan: "",
-        temperaments: []
-    })
-
-    function handleChange(e) {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
-        setErrors(validate({
-            ...data,
-            [e.target.name]: e.target.value
-        }))
-    }
-
-    function handleSelect(e) {
-        setData({
-            ...data,
-            temperaments: [...data.temperaments, e.target.value]
-        })
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        setErrors(
-            validate({
-                ...data,
-                [e.target.name]: e.target.value
-            })
- */
-
-
-// ANOTHER CODE
-
-/* 
-import React, { useState } from 'react';
-
-function ImageUploadForm() {
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
-
-  const types = ['image/png', 'image/jpeg'];
-
-  const handleChange = (e) => {
-    let selected = e.target.files[0];
-
-    if (selected && types.includes(selected.type)) {
-      setFile(selected);
-      setError('');
-    } else {
-      setFile(null);
-      setError('Please select an image file (png or jpeg)');
-    }
-  }
-
-  return (
-    <form>
-      <label>
-        <input type="file" onChange={handleChange} />
-        <span>+</span>
-      </label>
-      <div className="output">
-        {error && <div className="error">{error}</div>}
-        {file && <div>{file.name}</div>}
-      </div>
-    </form>
-  );
-}
-
-export default ImageUploadForm;
-
-*/
-
-
-/* OPTION TO UPLOAD AN IMAGE */
-
-/* const [file, setFile] = useState(null);
-const [imageName, setImageName] = useState(null);
-
-function handleImageChange(event) {
-  const file = event.target.files[0];
-  setFile(file);
-  setImageName(file.name);
-  const reader = new FileReader();
-  reader.onloadend = () => {
-    setImgSrc(reader.result);
-  }
-  reader.readAsDataURL(file);
-}
-
-const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('name', data.name);
-    formData.append('height', data.height);
-    formData.append('weight', data.weight);
-    formData.append('lifespan', data.lifespan);
-    formData.append('imageName', imageName);
-  
-    // post the form data to the server
-    dispatch(postDog(formData));
-    setFile(null);
-    setImageName(null);
-    setData({
-      name: "",
-      height: "",
-      weight: "",
-      lifespan: "",
-    });
-    history.goBack();
-  }   */

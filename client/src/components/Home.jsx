@@ -42,6 +42,11 @@ export default function Home() {
 
     const [dogPerPage, setDogPerPage]= useState(8);
 
+    const [selectedOption1, setSelectedOption1] = useState("");
+    const [selectedOption2, setSelectedOption2] = useState("");
+    const [selectedOption3, setSelectedOption3] = useState("");
+    const [selectedOption4, setSelectedOption4] = useState("");
+
     const [reset, setReset]= useState(0);
 
     const indexLastDog= currentPage * dogPerPage;
@@ -49,47 +54,6 @@ export default function Home() {
     const indexFirstDog= indexLastDog-dogPerPage;
 
     const current= allDogs.slice(indexFirstDog, indexLastDog);
-    
-    /* current.map(d => {
-        if (d.created) {
-            console.log(d.image);
-            const data= d.image;
-            const buffer= Buffer.from(data.data);
-            const reader= new FileReader();
-            reader.readAsDataURL(d.image.data);
-        }
-    }) */
-
-    /* const data = {type: 'Buffer', data: Array(466843)};
-    const buffer = Buffer.from(data.data);
-    const base64EncodedString = buffer.toString('base64');
-    console.log(base64EncodedString); */
-
-    // MAKE A BLOB FROM THE D.IMAGE.DATA (I think it's already a blob...)
-
-    /* const data = new Uint8Array([1, 2, 3]);
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-    console.log(blob) */
-
-    // CONVERT THE BLOB OBJECT TO A BASE64 STRING (I started above, finish it)
-
-    /* function App() {
-        const [data, setData] = useState([
-          { name: 'Image 1', image:  binary buffer image  },
-          { name: 'Image 2', image:  binary buffer image  },
-          { name: 'Image 3', image:  binary buffer image  },
-        ]);
-      
-        const handleFile = (index) => (e) => {
-          const file = e.target.files[0];
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onloadend = () => {
-            const newData = [...data];
-            newData[index].image = reader.result;
-            setData(newData);
-          };
-        }; */
 
     const paging= (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -98,6 +62,7 @@ export default function Home() {
 
     function handleFilterTemperament(e) {
         e.preventDefault();
+        setSelectedOption3(e.target.value);
         dispatch(filterByTemperament(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
@@ -105,6 +70,7 @@ export default function Home() {
 
     function handleFilterOrigin(e) {
         e.preventDefault();
+        setSelectedOption4(e.target.value);
         dispatch(filterByOrigin(e.target.value));
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`);
@@ -112,6 +78,7 @@ export default function Home() {
 
     function handleSort(e) {
         e.preventDefault();
+        setSelectedOption1(e.target.value);
         setSortDogs(true);
         dispatch(orderByRace(e.target.value));
         setCurrentPage(1);
@@ -120,6 +87,7 @@ export default function Home() {
 
     function handleWeightSort(e) {
         e.preventDefault();
+        setSelectedOption2(e.target.value);
         setSortDogs(true);
         dispatch(orderByWeight(e.target.value));
         setCurrentPage(1);
@@ -128,6 +96,10 @@ export default function Home() {
 
     function handleReset() {
         setReset(reset+0.0001);
+        setSelectedOption1("");
+        setSelectedOption2("");
+        setSelectedOption3("");
+        setSelectedOption4("");
         setSortDogs(false);
         setCurrentPage(1);
     };
@@ -148,7 +120,9 @@ export default function Home() {
 
             <div className="nav-H">
                 <div className="new-container-H">
-                    <select className="select-H"
+                    <select 
+                    value={selectedOption1}
+                    className="select-H"
                     onChange={e => 
                     handleSort(e)}>
                         <option>
@@ -162,7 +136,9 @@ export default function Home() {
                         </option>
                     </select>
 
-                    <select className="select-H"
+                    <select 
+                    value={selectedOption2}
+                    className="select-H"
                     onChange={e => handleWeightSort(e)}>
                         <option value="filter by weight">
                             Filter by weight
@@ -174,7 +150,9 @@ export default function Home() {
                             Highest weight
                         </option>
                     </select>
-                    <select className="select-H"
+                    <select 
+                    value={selectedOption3}
+                    className="select-H"
                     onChange={e => handleFilterTemperament(e)}>
                         <option value="temperaments">
                             Filter by temperament
@@ -190,7 +168,9 @@ export default function Home() {
                         }
                     </select>
 
-                    <select className="select-H"
+                    <select 
+                    value={selectedOption4}
+                    className="select-H"
                     onChange={e => handleFilterOrigin(e)}>
                         <option value="all">
                             All
@@ -240,7 +220,9 @@ export default function Home() {
                     current?.map(e => {
                         return (
                             <Fragment key={e.id}>
-                                <Link to={`/dogs/${e.id}`}>
+                                <Link 
+                                className="anchor-H"
+                                to={`/dogs/${e.id}`}>
                                     <DogCard
                                     id={e.id}
                                     name={e.name}
